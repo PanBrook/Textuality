@@ -4,7 +4,7 @@
 		{
 			"label": "Run Java Program",
 			"type": "shell",
-			"command": "javac Main.java ; java Main",
+			"command": "javac *.java ; java Main",
 			"group": {
 				"kind": "build",
 				"isDefault": true

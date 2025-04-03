@@ -1,0 +1,144 @@
+<!---___________STORY STUFF_____________-->
+:: StoryTitle
+Do Not Life
+
+:: StoryData
+{
+  "ifid": "F0926906-BC8A-4675-8BF7-F3ACC383B5DA",
+  "format": "SugarCube",
+  "format-version": "2.36.1",
+  "start": "Start",
+  "tag-colors": {
+    "noreturn": "red"
+  },
+  "zoom": 1
+}
+
+:: StoryScript [script]
+$(document).on(':passagestart', function (ev) {
+	if (!ev.passage.tags.includes('noreturn')) {
+		State.variables.return = ev.passage.title;
+	}
+});
+
+:: StoryMenu {"position":"0,200","size":"100,100"}
+[[Civilization]]
+[[Resources]]
+
+
+:: StoryCaption {"position":"0,0","size":"100,100"}
+(~_~_|_~_~)
+Energy: <<print $energy>>
+Day: <<print $days_passed>>
+Time: <<print $displayTime>>
+Season: <<print $Current_season>>
+
+
+
+:: StoryInit {"position":"0,100","size":"100,100"}
+<<set $stone to 0>>
+<<set $wood to 0>>
+<<set $energy to 20>>
+<<set $days_passed to 0>>
+<<set $Current_season to "Spring">>
+<<set $energy to 20>>
+:: Civilization [noreturn] {"position":"100,200","size":"100,100"}
+<<link "Return" $return>><</link>>
+Population: <<print $citizens>>
+
+:: Resources [noreturn] {"position":"200,200","size":"100,100"}
+<<link "Return" $return>><</link>>
+(+)Resources~(+)
+<<print $wood>> wood
+<<print $stone>> stone
+(+)____________(+)
+:: SS
+<!---_____START OF THINGS_______-->
+:: Start {"position":"475,0","size":"100,100"}
+Game to survive on this new odd world. Can you expand, survive, and prevail to the end?
+
+[[Enter game|Base]] 
+
+:: Base {"position":"475,125","size":"100,100"}
+~~~00+~+00~~~
+Here is where i lay
+I'll call it home
+Home is safe
+~~~00+~+00~~~
+
+Area Description-
+This is where you woke up. A field of nothing that stretches farther than your eyes can see. If your strain your eyes, you can spot the start of a rather large forest. The forest seems to circle around the plains you are currently in, if you want to go anywhere it'll be a long aimless walk.
+
+[[Go into the forest|Forest]]
+
+<<if $wood gte 10 and $stone gte 15>>
+You have unlocked crafting!
+[[crafting menu]]
+<</if>>
+
+[[ADVANCE DAY|Day Events]]
+
+
+
+:: Day Events {"position":"475,250","size":"100,100"}
+
+You must have run out of energy for the day, that's okay. 
+<<if $energy lt 0>>
+  <<set $energy to 10>>
+  <<else>>
+    <<set $energy to 20>>
+    <<set $days_passed to $days_passed + 1>>
+<</if>>
+[[Base]]
+
+:: House building {"position":"600,350","size":"100,100"}
+<!---______CRAFTING STUFF HERE________-->
+:: crafting menu {"position":"600,250","size":"100,100"}
+
+<<if $wood gte 30 and $stone gte 35>>
+You now have enough materials to build yur first house! Congrats to you!
+[[build a home|House building]]
+<</if>>
+
+<<if $wood gte 10 and $stone gte 12>>
+You now have enough materials to build a makeshift pickaxe. This will make collecting rocks and stones easier!
+[[Craft a Makeshift Pickaxe|Pickaxe]]
+<</if>>
+
+<<if $wood gte 10 and $stone gte 15>>
+  <<set $wood to $wood -10>>
+  <<set $stone to $stone -15>>
+  You now have enough materials to build a makeshift axe. This will make collecting wood and logs easier!
+ [[Craft a Makeshift Axe|Axe]]
+  <</if>>
+
+:: Axe 
+  <<set $wood to $wood -10>>
+  <<set $stone to $stone -15>>
+  [[Back to Base|Base]]
+:: Pickaxe
+
+<!---_________ACTIONS STUFF HERE________-->
+:: Forest {"position":"350,250","size":"100,100"}
+[[back|Base]] 
+
+Area Description-
+This is the forest. Trees and rocks is all you'll find here. Without a proper axe and pickaxe you'll have to settle for picking up the sticks and stones around the area. 
+{*}
+[[Pick up a stick]]
+[[Pick up a stone]]
+{*}
+
+[[back|Base]] 
+
+:: Pick up a stick {"position":"300,350","size":"100,100"}
+You chopped a tree 
+<<set $wood to $wood + 1>>
+<<set $energy to $energy - 1>>
+[[back|Forest]] 
+
+:: Pick up a stone {"position":"400,350","size":"100,100"}
+You pick up a rock.
+<<set $stone to $stone + 1>>
+<<set $energy to $energy - 1>>
+[[back|Forest]] 
