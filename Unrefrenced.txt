@@ -1,0 +1,20 @@
+// Add button to NPC Panel
+        JButton addNPCButton = new JButton("Generate NPC");
+        JLabel npcInfo = new JLabel("Click to generate NPC");
+        npcInfo.setHorizontalAlignment(SwingConstants.CENTER);
+        buttonArea.setLayout(new BorderLayout());
+        buttonArea.add(addNPCButton, BorderLayout.NORTH);
+        buttonArea.add(npcInfo, BorderLayout.CENTER);
+
+ // Button click event - generates random NPC
+        addNPCButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CharacterGen.NPC randomCharacter = CharacterGen.generateCharacter(); // Fully qualify NPC class
+
+                npcInfo.setText(randomCharacter.name + " - " + randomCharacter.traits + " - " + randomCharacter.age);
+                mainText.setText("You have encountered " + randomCharacter.name + ".\n" +
+                        "Traits: " + randomCharacter.traits + "\n" +
+                        "Age: " + randomCharacter.age + "\n");
+            }
+        });
